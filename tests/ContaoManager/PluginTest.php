@@ -3,13 +3,14 @@
 declare(strict_types=1);
 
 /*
- * This file is part of contao-h4a_tabellen.
+ * This file is part of contao-h4a_teams
+ *
  * (c) Jan Lünborg
+ *
  * @license LGPL-3.0-or-later
  */
 
 namespace Janborg\H4aTeams\Tests\ContaoManager;
-
 
 use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
