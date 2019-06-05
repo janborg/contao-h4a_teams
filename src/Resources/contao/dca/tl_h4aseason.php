@@ -47,7 +47,7 @@ $GLOBALS ['TL_DCA'] ['tl_h4aseason'] = [
     			'edit' => array
     			(
     				'label'               => &$GLOBALS['TL_LANG']['tl_season']['edit'],
-    				'href'                => 'table=tl_h4ateams',
+    				'href'                => 'table=tl_h4ateam',
     				'icon'                => 'edit.svg'
     			),
     			'editheader' => array
