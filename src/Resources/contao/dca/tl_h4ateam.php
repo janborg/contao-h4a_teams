@@ -22,8 +22,7 @@ $GLOBALS ['TL_DCA'] ['tl_h4ateam'] = array
 			'keys' => array
 			(
 				'id' => 'primary',
-				'alias' => 'index',
-				'pid,start,stop,published' => 'index'
+				'alias' => 'index'
 			)
 		)
 	),
@@ -34,8 +33,8 @@ $GLOBALS ['TL_DCA'] ['tl_h4ateam'] = array
 		'sorting' => array
 		(
 			'mode'                    => 4,
-			'fields'                  => array('startTime DESC'),
-			'headerFields'            => array('title', 'jumpTo', 'tstamp', 'protected', 'allowComments'),
+			'fields'                  => array('title DESC'),
+			'headerFields'            => array('title'),
 			'panelLayout'             => 'filter;sort,search,limit',
 			'child_record_callback'   => array('tl_h4ateams', 'listEvents')
 		),
@@ -102,8 +101,16 @@ $GLOBALS ['TL_DCA'] ['tl_h4ateam'] = array
     // Palettes
     'palettes' => array
     (
-      'default' => '{title_legend}, title; {image_legend}, ;'
+      '__selector__'          => array('overwriteMeta'),
+      'default'               => '{title_legend}, title; {image_legend}, singleSRC,size,floating,imagemargin,fullsize,overwriteMeta;'
     ),
+
+    //Subpalettes
+    'subpallettes' => array
+    (
+      'overwriteMeta'               => 'alt,imageTitle,imageUrl,caption'
+    ),
+
     // Fields
     'fields' => array
     (
@@ -113,7 +120,7 @@ $GLOBALS ['TL_DCA'] ['tl_h4ateam'] = array
       ),
       'pid' => array
       (
-        'foreignKey'              => 'tl_calendar.title',
+        'foreignKey'              => 'tl_h4aseason.title',
         'sql'                     => "int(10) unsigned NOT NULL default '0'",
         'relation'                => array('type'=>'belongsTo', 'load'=>'lazy')
       ),
@@ -145,6 +152,89 @@ $GLOBALS ['TL_DCA'] ['tl_h4ateam'] = array
         ),
         'sql'                     => "varchar(128) BINARY NOT NULL default ''"
       ),
+      'size' => array
+  		(
+  			'label'                   => &$GLOBALS['TL_LANG']['tl_content']['size'],
+  			'exclude'                 => true,
+  			'inputType'               => 'imageSize',
+  			'reference'               => &$GLOBALS['TL_LANG']['MSC'],
+  			'eval'                    => array('rgxp'=>'natural', 'includeBlankOption'=>true, 'nospace'=>true, 'helpwizard'=>true, 'tl_class'=>'w50'),
+  			'options_callback' => function ()
+  			{
+  				return Contao\System::getContainer()->get('contao.image.image_sizes')->getOptionsForUser(Contao\BackendUser::getInstance());
+  			},
+  			'sql'                     => "varchar(64) NOT NULL default ''"
+  		),
+      'floating' => array
+      (
+        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['floating'],
+        'exclude'                 => true,
+        'inputType'               => 'radioTable',
+        'options'                 => array('above', 'left', 'right', 'below'),
+        'eval'                    => array('cols'=>4, 'tl_class'=>'w50'),
+        'reference'               => &$GLOBALS['TL_LANG']['MSC'],
+        'sql'                     => "varchar(32) NOT NULL default 'above'"
+      ),
+  		'imagemargin' => array
+  		(
+  			'label'                   => &$GLOBALS['TL_LANG']['tl_content']['imagemargin'],
+  			'exclude'                 => true,
+  			'inputType'               => 'trbl',
+  			'options'                 => $GLOBALS['TL_CSS_UNITS'],
+  			'eval'                    => array('includeBlankOption'=>true, 'tl_class'=>'w50'),
+  			'sql'                     => "varchar(128) NOT NULL default ''"
+  		),
+      'fullsize' => array
+  		(
+  			'label'                   => &$GLOBALS['TL_LANG']['tl_content']['fullsize'],
+  			'exclude'                 => true,
+  			'inputType'               => 'checkbox',
+  			'eval'                    => array('tl_class'=>'w50 m12'),
+  			'sql'                     => "char(1) NOT NULL default ''"
+  		),
+      'overwriteMeta' => array
+  		(
+  			'label'                   => &$GLOBALS['TL_LANG']['tl_content']['overwriteMeta'],
+  			'exclude'                 => true,
+  			'inputType'               => 'checkbox',
+  			'eval'                    => array('submitOnChange'=>true, 'tl_class'=>'w50 clr'),
+  			'sql'                     => "char(1) NOT NULL default ''"
+  		),
+  		'alt' => array
+  		(
+  			'label'                   => &$GLOBALS['TL_LANG']['tl_content']['alt'],
+  			'exclude'                 => true,
+  			'search'                  => true,
+  			'inputType'               => 'text',
+  			'eval'                    => array('maxlength'=>255, 'tl_class'=>'w50'),
+  			'sql'                     => "varchar(255) NOT NULL default ''"
+  		),
+  		'imageTitle' => array
+  		(
+  			'label'                   => &$GLOBALS['TL_LANG']['tl_content']['imageTitle'],
+  			'exclude'                 => true,
+  			'search'                  => true,
+  			'inputType'               => 'text',
+  			'eval'                    => array('maxlength'=>255, 'tl_class'=>'w50'),
+  			'sql'                     => "varchar(255) NOT NULL default ''"
+  		),
+      'imageUrl' => array
+  		(
+  			'label'                   => &$GLOBALS['TL_LANG']['tl_content']['imageUrl'],
+  			'exclude'                 => true,
+  			'search'                  => true,
+  			'inputType'               => 'text',
+  			'eval'                    => array('rgxp'=>'url', 'decodeEntities'=>true, 'maxlength'=>255, 'dcaPicker'=>true, 'tl_class'=>'w50 wizard'),
+  			'sql'                     => "varchar(255) NOT NULL default ''"
+  		),
+      'singleSRC' => array
+  		(
+  			'label'                   => &$GLOBALS['TL_LANG']['tl_content']['singleSRC'],
+  			'exclude'                 => true,
+  			'inputType'               => 'fileTree',
+  			'eval'                    => array('filesOnly'=>true, 'fieldType'=>'radio', 'extensions'=>Contao\Config::get('validImageTypes'), 'mandatory'=>true),
+  			'sql'                     => "binary(16) NULL"
+  		),
     )
 );
 
