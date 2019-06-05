@@ -9,8 +9,6 @@ $GLOBALS ['TL_DCA'] ['tl_h4ateam'] = array
 	(
 		'dataContainer'               => 'Table',
 		'ptable'                      => 'tl_h4aseason',
-		//'ctable'                      => array('tl_content'),
-		'switchToEdit'                => true,
 		'enableVersioning'            => true,
 		'markAsCopy'                  => 'title',
 		'onload_callback' => array
@@ -104,9 +102,9 @@ $GLOBALS ['TL_DCA'] ['tl_h4ateam'] = array
     ),
 
     //Subpalettes
-    'subpallettes' => array
+    'subpalettes' => array
     (
-      'overwriteMeta'               => 'alt,imageTitle,imageUrl,caption'
+      'overwriteMeta'         => 'alt, imageTitle, imageUrl, caption'
     ),
 
     // Fields
@@ -233,6 +231,15 @@ $GLOBALS ['TL_DCA'] ['tl_h4ateam'] = array
   			'eval'                    => array('rgxp'=>'url', 'decodeEntities'=>true, 'maxlength'=>255, 'dcaPicker'=>true, 'tl_class'=>'w50 wizard'),
   			'sql'                     => "varchar(255) NOT NULL default ''"
   		),
+      'teamDescription' => array
+      (
+        'label'                   => &$GLOBALS['TL_LANG']['tl_h4ateam']['teamDescription'],
+        'exclude'                 => true,
+        'search'                  => true,
+        'inputType'               => 'textarea',
+        'eval'                    => array('rte'=>'tinyMCE', 'tl_class'=>'clr'),
+        'sql'                     => "text NULL"
+      ),
     )
 );
 
