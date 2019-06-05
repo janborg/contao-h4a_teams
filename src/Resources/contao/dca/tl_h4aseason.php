@@ -6,7 +6,7 @@ $GLOBALS ['TL_DCA'] ['tl_h4aseason'] = [
     // Config
     'config' => [
       'dataContainer'               => 'Table',
-	    'ctable'                      => array('tl_h4ateams'),
+	    'ctable'                      => array('tl_h4ateam'),
       'switchToEdit'                => true,
       'enableVersioning'            => true,
       'markAsCopy'                  => 'title',
