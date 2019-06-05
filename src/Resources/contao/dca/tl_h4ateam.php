@@ -1,6 +1,6 @@
 <?php
 /**
- * Table tl_team
+ * Table tl_h4ateam
  */
 $GLOBALS ['TL_DCA'] ['tl_h4ateam'] = array
 (

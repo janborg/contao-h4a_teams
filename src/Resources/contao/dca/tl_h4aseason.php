@@ -46,35 +46,35 @@ $GLOBALS ['TL_DCA'] ['tl_h4aseason'] = [
     		(
     			'edit' => array
     			(
-    				'label'               => &$GLOBALS['TL_LANG']['tl_season']['edit'],
+    				'label'               => &$GLOBALS['TL_LANG']['tl_h4aseason']['edit'],
     				'href'                => 'table=tl_h4ateam',
     				'icon'                => 'edit.svg'
     			),
     			'editheader' => array
     			(
-    				'label'               => &$GLOBALS['TL_LANG']['tl_season']['editheader'],
+    				'label'               => &$GLOBALS['TL_LANG']['tl_h4aseason']['editheader'],
     				'href'                => 'act=edit',
     				'icon'                => 'header.svg',
-    				'button_callback'     => array('tl_season', 'editHeader')
+    				'button_callback'     => array('tl_h4aseason', 'editHeader')
     			),
     			'copy' => array
     			(
-    				'label'               => &$GLOBALS['TL_LANG']['tl_season']['copy'],
+    				'label'               => &$GLOBALS['TL_LANG']['tl_h4aseason']['copy'],
     				'href'                => 'act=copy',
     				'icon'                => 'copy.svg',
-    				'button_callback'     => array('tl_season', 'copySeason')
+    				'button_callback'     => array('tl_h4aseason', 'copySeason')
     			),
     			'delete' => array
     			(
-    				'label'               => &$GLOBALS['TL_LANG']['tl_season']['delete'],
+    				'label'               => &$GLOBALS['TL_LANG']['tl_h4aseason']['delete'],
     				'href'                => 'act=delete',
     				'icon'                => 'delete.svg',
     				'attributes'          => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\'))return false;Backend.getScrollOffset()"',
-    				'button_callback'     => array('tl_season', 'deleteSeason')
+    				'button_callback'     => array('tl_h4aseason', 'deleteSeason')
     			),
     			'show' => array
     			(
-    				'label'               => &$GLOBALS['TL_LANG']['tl_season']['show'],
+    				'label'               => &$GLOBALS['TL_LANG']['tl_h4aseason']['show'],
     				'href'                => 'act=show',
     				'icon'                => 'show.svg'
     			)
@@ -98,7 +98,7 @@ $GLOBALS ['TL_DCA'] ['tl_h4aseason'] = [
     		),
     		'title' => array
     		(
-    			'label'                   => &$GLOBALS['TL_LANG']['tl_season']['title'],
+    			'label'                   => &$GLOBALS['TL_LANG']['tl_h4aseason']['title'],
     			'exclude'                 => true,
     			'search'                  => true,
     			'inputType'               => 'text',
@@ -141,7 +141,7 @@ class tl_h4aseason extends Contao\Backend
 	}
 
 	/**
-	 * Check permissions to edit table tl_season
+	 * Check permissions to edit table tl_h4aseason
 	 *
 	 * @throws Contao\CoreBundle\Exception\AccessDeniedException
 	 */
@@ -152,7 +152,7 @@ class tl_h4aseason extends Contao\Backend
 		// HOOK: comments extension required
 		if (!isset($bundles['ContaoCommentsBundle']))
 		{
-			unset($GLOBALS['TL_DCA']['tl_season']['fields']['allowComments']);
+			unset($GLOBALS['TL_DCA']['tl_h4aseason']['fields']['allowComments']);
 		}
 
 		if ($this->User->isAdmin)
@@ -170,20 +170,20 @@ class tl_h4aseason extends Contao\Backend
 			$root = $this->User->calendars;
 		}
 
-		$GLOBALS['TL_DCA']['tl_season']['list']['sorting']['root'] = $root;
+		$GLOBALS['TL_DCA']['tl_h4aseason']['list']['sorting']['root'] = $root;
 
 		// Check permissions to add calendars
 		if (!$this->User->hasAccess('create', 'calendarp'))
 		{
-			$GLOBALS['TL_DCA']['tl_season']['config']['closed'] = true;
-			$GLOBALS['TL_DCA']['tl_season']['config']['notCreatable'] = true;
-			$GLOBALS['TL_DCA']['tl_season']['config']['notCopyable'] = true;
+			$GLOBALS['TL_DCA']['tl_h4aseason']['config']['closed'] = true;
+			$GLOBALS['TL_DCA']['tl_h4aseason']['config']['notCreatable'] = true;
+			$GLOBALS['TL_DCA']['tl_h4aseason']['config']['notCopyable'] = true;
 		}
 
 		// Check permissions to delete calendars
 		if (!$this->User->hasAccess('delete', 'calendarp'))
 		{
-			$GLOBALS['TL_DCA']['tl_season']['config']['notDeletable'] = true;
+			$GLOBALS['TL_DCA']['tl_h4aseason']['config']['notDeletable'] = true;
 		}
 
 		/** @var Symfony\Component\HttpFoundation\Session\SessionInterface $objSession */
@@ -277,7 +277,7 @@ class tl_h4aseason extends Contao\Backend
 
 		$arrNew = $objSessionBag->get('new_records');
 
-		if (\is_array($arrNew['tl_season']) && \in_array($insertId, $arrNew['tl_season']))
+		if (\is_array($arrNew['tl_h4aseason']) && \in_array($insertId, $arrNew['tl_h4aseason']))
 		{
 			// Add the permissions on group level
 			if ($this->User->inherit != 'custom')
@@ -367,7 +367,7 @@ class tl_h4aseason extends Contao\Backend
 	 */
 	public function editHeader($row, $href, $label, $title, $icon, $attributes)
 	{
-		return $this->User->canEditFieldsOf('tl_season') ? '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.Contao\StringUtil::specialchars($title).'"'.$attributes.'>'.Contao\Image::getHtml($icon, $label).'</a> ' : Contao\Image::getHtml(preg_replace('/\.svg/i', '_.svg', $icon)).' ';
+		return $this->User->canEditFieldsOf('tl_h4aseason') ? '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.Contao\StringUtil::specialchars($title).'"'.$attributes.'>'.Contao\Image::getHtml($icon, $label).'</a> ' : Contao\Image::getHtml(preg_replace('/\.svg/i', '_.svg', $icon)).' ';
 	}
 
 	/**
