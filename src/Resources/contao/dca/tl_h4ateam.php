@@ -8,7 +8,7 @@ $GLOBALS ['TL_DCA'] ['tl_h4ateam'] = array
     'config' => array
 	(
 		'dataContainer'               => 'Table',
-		'ptable'                      => 'tl_season',
+		'ptable'                      => 'tl_h4aseason',
 		//'ctable'                      => array('tl_content'),
 		'switchToEdit'                => true,
 		'enableVersioning'            => true,
@@ -35,9 +35,13 @@ $GLOBALS ['TL_DCA'] ['tl_h4ateam'] = array
 			'mode'                    => 4,
 			'fields'                  => array('title DESC'),
 			'headerFields'            => array('title'),
-			'panelLayout'             => 'filter;sort,search,limit',
-			'child_record_callback'   => array('tl_h4ateams', 'listEvents')
+			'panelLayout'             => 'filter;sort,search,limit'
 		),
+    'label' => array
+    (
+      'fields'                  => array('title'),
+      'format'                  => '%s'
+    ),
 		'global_operations' => array
 		(
 			'all' => array
@@ -53,14 +57,8 @@ $GLOBALS ['TL_DCA'] ['tl_h4ateam'] = array
 			'edit' => array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_h4teams']['edit'],
-				'href'                => 'table=tl_content',
-				'icon'                => 'edit.svg'
-			),
-			'editheader' => array
-			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_h4teams']['editmeta'],
 				'href'                => 'act=edit',
-				'icon'                => 'header.svg'
+				'icon'                => 'edit.svg'
 			),
 			'copy' => array
 			(
@@ -152,6 +150,14 @@ $GLOBALS ['TL_DCA'] ['tl_h4ateam'] = array
         ),
         'sql'                     => "varchar(128) BINARY NOT NULL default ''"
       ),
+      'singleSRC' => array
+      (
+        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['singleSRC'],
+        'exclude'                 => true,
+        'inputType'               => 'fileTree',
+        'eval'                    => array('filesOnly'=>true, 'fieldType'=>'radio', 'extensions'=>Contao\Config::get('validImageTypes'), 'mandatory'=>true),
+        'sql'                     => "binary(16) NULL"
+      ),
       'size' => array
   		(
   			'label'                   => &$GLOBALS['TL_LANG']['tl_content']['size'],
@@ -226,14 +232,6 @@ $GLOBALS ['TL_DCA'] ['tl_h4ateam'] = array
   			'inputType'               => 'text',
   			'eval'                    => array('rgxp'=>'url', 'decodeEntities'=>true, 'maxlength'=>255, 'dcaPicker'=>true, 'tl_class'=>'w50 wizard'),
   			'sql'                     => "varchar(255) NOT NULL default ''"
-  		),
-      'singleSRC' => array
-  		(
-  			'label'                   => &$GLOBALS['TL_LANG']['tl_content']['singleSRC'],
-  			'exclude'                 => true,
-  			'inputType'               => 'fileTree',
-  			'eval'                    => array('filesOnly'=>true, 'fieldType'=>'radio', 'extensions'=>Contao\Config::get('validImageTypes'), 'mandatory'=>true),
-  			'sql'                     => "binary(16) NULL"
   		),
     )
 );
@@ -398,34 +396,6 @@ class tl_h4teams extends Contao\Backend
 
 		return $varValue;
 	}
-
-	/**
-	 * Add the type of input field
-	 *
-	 * @param array $arrRow
-	 *
-	 * @return string
-	 */
-	public function listEvents($arrRow)
-	{
-		$span = Contao\Calendar::calculateSpan($arrRow['startTime'], $arrRow['endTime']);
-
-		if ($span > 0)
-		{
-			$date = Contao\Date::parse(Contao\Config::get(($arrRow['addTime'] ? 'datimFormat' : 'dateFormat')), $arrRow['startTime']) . $GLOBALS['TL_LANG']['MSC']['cal_timeSeparator'] . Contao\Date::parse(Contao\Config::get(($arrRow['addTime'] ? 'datimFormat' : 'dateFormat')), $arrRow['endTime']);
-		}
-		elseif ($arrRow['startTime'] == $arrRow['endTime'])
-		{
-			$date = Contao\Date::parse(Contao\Config::get('dateFormat'), $arrRow['startTime']) . ($arrRow['addTime'] ? ' ' . Contao\Date::parse(Contao\Config::get('timeFormat'), $arrRow['startTime']) : '');
-		}
-		else
-		{
-			$date = Contao\Date::parse(Contao\Config::get('dateFormat'), $arrRow['startTime']) . ($arrRow['addTime'] ? ' ' . Contao\Date::parse(Contao\Config::get('timeFormat'), $arrRow['startTime']) . $GLOBALS['TL_LANG']['MSC']['cal_timeSeparator'] . Contao\Date::parse(Contao\Config::get('timeFormat'), $arrRow['endTime']) : '');
-		}
-
-		return '<div class="tl_content_left">' . $arrRow['title'] . ' <span style="color:#999;padding-left:3px">[' . $date . ']</span></div>';
-	}
-
 
 	/**
 	 * Return the "toggle visibility" button

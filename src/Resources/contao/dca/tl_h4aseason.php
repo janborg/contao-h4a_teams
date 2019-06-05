@@ -83,7 +83,7 @@ $GLOBALS ['TL_DCA'] ['tl_h4aseason'] = [
     // Palettes
     'palettes' => array
     (
-      'default' => '{title_legend},title'
+      'default' => '{title_legend},title, alias'
     ),
     // Fields
     'fields' => array
@@ -105,6 +105,19 @@ $GLOBALS ['TL_DCA'] ['tl_h4aseason'] = [
     			'eval'                    => array('mandatory'=>true, 'maxlength'=>255, 'tl_class'=>'w50'),
     			'sql'                     => "varchar(255) NOT NULL default ''"
     		),
+        'alias' => array
+        (
+          'label'                   => &$GLOBALS['TL_LANG']['tl_h4teams']['alias'],
+          'exclude'                 => true,
+          'search'                  => true,
+          'inputType'               => 'text',
+          'eval'                    => array('rgxp'=>'alias', 'doNotCopy'=>true, 'unique'=>true, 'maxlength'=>128, 'tl_class'=>'w50 clr'),
+          'save_callback' => array
+          (
+            array('tl_h4aseason', 'generateAlias')
+          ),
+          'sql'                     => "varchar(128) BINARY NOT NULL default ''"
+        ),
     )
 ];
 
@@ -115,7 +128,7 @@ $GLOBALS ['TL_DCA'] ['tl_h4aseason'] = [
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class tl_season extends Contao\Backend
+class tl_h4aseason extends Contao\Backend
 {
 
 	/**
@@ -311,6 +324,35 @@ class tl_season extends Contao\Backend
 		}
 	}
 
+  /**
+   * Auto-generate the season alias if it has not been set yet
+   *
+   * @param mixed                $varValue
+   * @param Contao\DataContainer $dc
+   *
+   * @return mixed
+   *
+   * @throws Exception
+   */
+  public function generateAlias($varValue, Contao\DataContainer $dc)
+  {
+    $aliasExists = function (string $alias) use ($dc): bool
+    {
+      return $this->Database->prepare("SELECT id FROM tl_h4teams WHERE alias=? AND id!=?")->execute($alias, $dc->id)->numRows > 0;
+    };
+
+    // Generate the alias if there is none
+    if ($varValue == '')
+    {
+      $varValue = Contao\System::getContainer()->get('contao.slug')->generate($dc->activeRecord->title, Contao\CalendarModel::findByPk($dc->activeRecord->pid)->jumpTo ?? array(), $aliasExists);
+    }
+    elseif ($aliasExists($varValue))
+    {
+      throw new Exception(sprintf($GLOBALS['TL_LANG']['ERR']['aliasExists'], $varValue));
+    }
+
+    return $varValue;
+  }
 	/**
 	 * Return the edit header button
 	 *
