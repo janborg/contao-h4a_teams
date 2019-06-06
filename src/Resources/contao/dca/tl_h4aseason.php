@@ -6,7 +6,7 @@ $GLOBALS ['TL_DCA'] ['tl_h4aseason'] = [
     // Config
     'config' => [
       'dataContainer'               => 'Table',
-	    'ctable'                      => array('tl_h4ateam'),
+	    'ctable'                      => array('tl_h4ateams'),
       'switchToEdit'                => true,
       'enableVersioning'            => true,
       'markAsCopy'                  => 'title',
@@ -47,7 +47,7 @@ $GLOBALS ['TL_DCA'] ['tl_h4aseason'] = [
     			'edit' => array
     			(
     				'label'               => &$GLOBALS['TL_LANG']['tl_h4aseason']['edit'],
-    				'href'                => 'table=tl_h4ateam',
+    				'href'                => 'table=tl_h4ateams',
     				'icon'                => 'edit.svg'
     			),
     			'editheader' => array
@@ -107,7 +107,7 @@ $GLOBALS ['TL_DCA'] ['tl_h4aseason'] = [
     		),
         'alias' => array
         (
-          'label'                   => &$GLOBALS['TL_LANG']['tl_h4teams']['alias'],
+          'label'                   => &$GLOBALS['TL_LANG']['tl_h4aseason']['alias'],
           'exclude'                 => true,
           'search'                  => true,
           'inputType'               => 'text',
@@ -338,7 +338,7 @@ class tl_h4aseason extends Contao\Backend
   {
     $aliasExists = function (string $alias) use ($dc): bool
     {
-      return $this->Database->prepare("SELECT id FROM tl_h4teams WHERE alias=? AND id!=?")->execute($alias, $dc->id)->numRows > 0;
+      return $this->Database->prepare("SELECT id FROM tl_h4aseason WHERE alias=? AND id!=?")->execute($alias, $dc->id)->numRows > 0;
     };
 
     // Generate the alias if there is none
