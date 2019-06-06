@@ -21,7 +21,7 @@
         "contao/manager-plugin": "^2.0",
         "doctrine/doctrine-cache-bundle": "^1.3",
         "doctrine/doctrine-migrations-bundle": "^2.0",
-        "doctrine/orm": "<2.4",
+        "doctrine/orm": "^2.6",
         "doctrine/event-manager": "^1.0",
         "friendsofphp/php-cs-fixer": "^2.12",
         "phpunit/phpunit": "^5.7.26",
