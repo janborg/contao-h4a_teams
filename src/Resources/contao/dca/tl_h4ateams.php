@@ -1,8 +1,8 @@
 <?php
 /**
- * Table tl_h4ateam
+ * Table tl_h4ateams
  */
-$GLOBALS ['TL_DCA'] ['tl_h4ateam'] = array
+$GLOBALS ['TL_DCA'] ['tl_h4ateams'] = array
 (
     // Config
     'config' => array
@@ -13,7 +13,7 @@ $GLOBALS ['TL_DCA'] ['tl_h4ateam'] = array
 		'markAsCopy'                  => 'title',
 		'onload_callback' => array
 		(
-			array('tl_h4teams', 'checkPermission'),
+			array('tl_h4ateams', 'checkPermission'),
 		),
 		'sql' => array
 		(
@@ -54,40 +54,40 @@ $GLOBALS ['TL_DCA'] ['tl_h4ateam'] = array
 		(
 			'edit' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_h4teams']['edit'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_h4ateams']['edit'],
 				'href'                => 'act=edit',
 				'icon'                => 'edit.svg'
 			),
 			'copy' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_h4teams']['copy'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_h4ateams']['copy'],
 				'href'                => 'act=paste&amp;mode=copy',
 				'icon'                => 'copy.svg'
 			),
 			'cut' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_h4teams']['cut'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_h4ateams']['cut'],
 				'href'                => 'act=paste&amp;mode=cut',
 				'icon'                => 'cut.svg'
 			),
 			'delete' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_h4teams']['delete'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_h4ateams']['delete'],
 				'href'                => 'act=delete',
 				'icon'                => 'delete.svg',
 				'attributes'          => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\'))return false;Backend.getScrollOffset()"'
 			),
 			'toggle' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_h4teams']['toggle'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_h4ateams']['toggle'],
 				'icon'                => 'visible.svg',
 				'attributes'          => 'onclick="Backend.getScrollOffset();return AjaxRequest.toggleVisibility(this,%s)"',
-				'button_callback'     => array('tl_h4teams', 'toggleIcon'),
+				'button_callback'     => array('tl_h4ateams', 'toggleIcon'),
 				'showInHeader'        => true
 			),
 			'show' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_h4teams']['show'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_h4ateams']['show'],
 				'href'                => 'act=show',
 				'icon'                => 'show.svg'
 			)
@@ -126,7 +126,7 @@ $GLOBALS ['TL_DCA'] ['tl_h4ateam'] = array
       ),
       'title' => array
       (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_h4teams']['title'],
+        'label'                   => &$GLOBALS['TL_LANG']['tl_h4ateams']['title'],
         'exclude'                 => true,
         'search'                  => true,
         'sorting'                 => true,
@@ -137,7 +137,7 @@ $GLOBALS ['TL_DCA'] ['tl_h4ateam'] = array
       ),
       'alias' => array
       (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_h4teams']['alias'],
+        'label'                   => &$GLOBALS['TL_LANG']['tl_h4ateams']['alias'],
         'exclude'                 => true,
         'search'                  => true,
         'inputType'               => 'text',
@@ -233,7 +233,7 @@ $GLOBALS ['TL_DCA'] ['tl_h4ateam'] = array
   		),
       'teamDescription' => array
       (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_h4ateam']['teamDescription'],
+        'label'                   => &$GLOBALS['TL_LANG']['tl_h4ateams']['teamDescription'],
         'exclude'                 => true,
         'search'                  => true,
         'inputType'               => 'textarea',
@@ -250,7 +250,7 @@ $GLOBALS ['TL_DCA'] ['tl_h4ateam'] = array
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class tl_h4teams extends Contao\Backend
+class tl_h4ateams extends Contao\Backend
 {
 
 	/**
@@ -263,7 +263,7 @@ class tl_h4teams extends Contao\Backend
 	}
 
 	/**
-	 * Check permissions to edit table tl_h4teams
+	 * Check permissions to edit table tl_h4ateams
 	 *
 	 * @throws Contao\CoreBundle\Exception\AccessDeniedException
 	 */
@@ -274,8 +274,8 @@ class tl_h4teams extends Contao\Backend
 		// HOOK: comments extension required
 		if (!isset($bundles['ContaoCommentsBundle']))
 		{
-			$key = array_search('allowComments', $GLOBALS['TL_DCA']['tl_h4teams']['list']['sorting']['headerFields']);
-			unset($GLOBALS['TL_DCA']['tl_h4teams']['list']['sorting']['headerFields'][$key]);
+			$key = array_search('allowComments', $GLOBALS['TL_DCA']['tl_h4ateams']['list']['sorting']['headerFields']);
+			unset($GLOBALS['TL_DCA']['tl_h4ateams']['list']['sorting']['headerFields'][$key]);
 		}
 
 		if ($this->User->isAdmin)
@@ -325,7 +325,7 @@ class tl_h4teams extends Contao\Backend
 			case 'show':
 			case 'delete':
 			case 'toggle':
-				$objCalendar = $this->Database->prepare("SELECT pid FROM tl_h4teams WHERE id=?")
+				$objCalendar = $this->Database->prepare("SELECT pid FROM tl_h4ateams WHERE id=?")
 											  ->limit(1)
 											  ->execute($id);
 
@@ -350,7 +350,7 @@ class tl_h4teams extends Contao\Backend
 					throw new Contao\CoreBundle\Exception\AccessDeniedException('Not enough permissions to access calendar ID ' . $id . '.');
 				}
 
-				$objCalendar = $this->Database->prepare("SELECT id FROM tl_h4teams WHERE pid=?")
+				$objCalendar = $this->Database->prepare("SELECT id FROM tl_h4ateams WHERE pid=?")
 											  ->execute($id);
 
 				/** @var Symfony\Component\HttpFoundation\Session\SessionInterface $objSession */
@@ -388,7 +388,7 @@ class tl_h4teams extends Contao\Backend
 	{
 		$aliasExists = function (string $alias) use ($dc): bool
 		{
-			return $this->Database->prepare("SELECT id FROM tl_h4teams WHERE alias=? AND id!=?")->execute($alias, $dc->id)->numRows > 0;
+			return $this->Database->prepare("SELECT id FROM tl_h4ateams WHERE alias=? AND id!=?")->execute($alias, $dc->id)->numRows > 0;
 		};
 
 		// Generate the alias if there is none
@@ -425,7 +425,7 @@ class tl_h4teams extends Contao\Backend
 		}
 
 		// Check permissions AFTER checking the tid, so hacking attempts are logged
-		if (!$this->User->hasAccess('tl_h4teams::published', 'alexf'))
+		if (!$this->User->hasAccess('tl_h4ateams::published', 'alexf'))
 		{
 			return '';
 		}
@@ -461,9 +461,9 @@ class tl_h4teams extends Contao\Backend
 		}
 
 		// Trigger the onload_callback
-		if (\is_array($GLOBALS['TL_DCA']['tl_h4teams']['config']['onload_callback']))
+		if (\is_array($GLOBALS['TL_DCA']['tl_h4ateams']['config']['onload_callback']))
 		{
-			foreach ($GLOBALS['TL_DCA']['tl_h4teams']['config']['onload_callback'] as $callback)
+			foreach ($GLOBALS['TL_DCA']['tl_h4ateams']['config']['onload_callback'] as $callback)
 			{
 				if (\is_array($callback))
 				{
@@ -478,7 +478,7 @@ class tl_h4teams extends Contao\Backend
 		}
 
 		// Check the field access
-		if (!$this->User->hasAccess('tl_h4teams::published', 'alexf'))
+		if (!$this->User->hasAccess('tl_h4ateams::published', 'alexf'))
 		{
 			throw new Contao\CoreBundle\Exception\AccessDeniedException('Not enough permissions to publish/unpublish event ID ' . $intId . '.');
 		}
@@ -486,7 +486,7 @@ class tl_h4teams extends Contao\Backend
 		// Set the current record
 		if ($dc)
 		{
-			$objRow = $this->Database->prepare("SELECT * FROM tl_h4teams WHERE id=?")
+			$objRow = $this->Database->prepare("SELECT * FROM tl_h4ateams WHERE id=?")
 									 ->limit(1)
 									 ->execute($intId);
 
@@ -496,13 +496,13 @@ class tl_h4teams extends Contao\Backend
 			}
 		}
 
-		$objVersions = new Contao\Versions('tl_h4teams', $intId);
+		$objVersions = new Contao\Versions('tl_h4ateams', $intId);
 		$objVersions->initialize();
 
 		// Trigger the save_callback
-		if (\is_array($GLOBALS['TL_DCA']['tl_h4teams']['fields']['published']['save_callback']))
+		if (\is_array($GLOBALS['TL_DCA']['tl_h4ateams']['fields']['published']['save_callback']))
 		{
-			foreach ($GLOBALS['TL_DCA']['tl_h4teams']['fields']['published']['save_callback'] as $callback)
+			foreach ($GLOBALS['TL_DCA']['tl_h4ateams']['fields']['published']['save_callback'] as $callback)
 			{
 				if (\is_array($callback))
 				{
@@ -519,7 +519,7 @@ class tl_h4teams extends Contao\Backend
 		$time = time();
 
 		// Update the database
-		$this->Database->prepare("UPDATE tl_h4teams SET tstamp=$time, published='" . ($blnVisible ? '1' : '') . "' WHERE id=?")
+		$this->Database->prepare("UPDATE tl_h4ateams SET tstamp=$time, published='" . ($blnVisible ? '1' : '') . "' WHERE id=?")
 					   ->execute($intId);
 
 		if ($dc)
@@ -529,9 +529,9 @@ class tl_h4teams extends Contao\Backend
 		}
 
 		// Trigger the onsubmit_callback
-		if (\is_array($GLOBALS['TL_DCA']['tl_h4teams']['config']['onsubmit_callback']))
+		if (\is_array($GLOBALS['TL_DCA']['tl_h4ateams']['config']['onsubmit_callback']))
 		{
-			foreach ($GLOBALS['TL_DCA']['tl_h4teams']['config']['onsubmit_callback'] as $callback)
+			foreach ($GLOBALS['TL_DCA']['tl_h4ateams']['config']['onsubmit_callback'] as $callback)
 			{
 				if (\is_array($callback))
 				{
