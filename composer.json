@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "php": "^5.6 || ^7.0",
+        "php": "^7.3",
         "contao/core-bundle": "^4.4"
     },
     "conflict": {
@@ -25,7 +25,7 @@
         "doctrine/event-manager": "^1.0",
         "friendsofphp/php-cs-fixer": "^2.12",
         "phpunit/phpunit": "^5.7.26",
-        "symfony/phpunit-bridge": "^3.2"
+        "symfony/phpunit-bridge": "^4.2"
     },
     "extra": {
         "contao-manager-plugin": "Janborg\\H4aTeams\\ContaoManager\\Plugin"
