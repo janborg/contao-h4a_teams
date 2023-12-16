@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 /*
- * This file is part of contao-h4a_teams
+ * This file is part of contao-h4a_teams.
  *
  * (c) Jan Lünborg
  *
- * @license LGPL-3.0-or-later
+ * @license MIT
  */
 
 namespace Janborg\H4aTeams\Tests;
@@ -15,7 +17,7 @@ use PHPUnit\Framework\TestCase;
 
 class JanborgH4aTeamsBundleTest extends TestCase
 {
-    public function testCanBeInstantiated()
+    public function testCanBeInstantiated(): void
     {
         $bundle = new JanborgH4aTeamsBundle();
 
