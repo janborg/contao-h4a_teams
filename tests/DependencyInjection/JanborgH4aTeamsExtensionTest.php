@@ -24,9 +24,6 @@ class JanborgH4aTeamsExtensionTest extends TestCase
      */
     private $container;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setup(): void
     {
         parent::setup();

@@ -19,14 +19,11 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 class JanborgH4aTeamsExtension extends Extension
 {
-    /**
-     * {@inheritdoc}
-     */
     public function load(array $mergedConfig, ContainerBuilder $container): void
     {
         $loader = new YamlFileLoader(
             $container,
-            new FileLocator(__DIR__.'/../../config')
+            new FileLocator(__DIR__.'/../../config'),
         );
 
         $loader->load('services.yml');

@@ -20,9 +20,6 @@ use Janborg\H4aTeams\JanborgH4aTeamsBundle;
 
 class Plugin implements BundlePluginInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getBundles(ParserInterface $parser)
     {
         return [
