@@ -2,10 +2,15 @@
 
 declare(strict_types=1);
 
-use Contao\BackendUser;
-use Contao\Config;
+/*
+ * This file is part of contao-h4a_teams.
+ *
+ * (c) Jan Lünborg
+ *
+ * @license MIT
+ */
+
 use Contao\DataContainer;
-use Contao\System;
 use Contao\DC_Table;
 
 /*
@@ -17,7 +22,7 @@ $GLOBALS['TL_DCA']['tl_h4a_teams_archive'] = [
     'config' => [
         'dataContainer' => DC_Table::class,
         'ctable' => ['tl_h4a_teams'],
-        'switchToEdit'                => true,
+        'switchToEdit' => true,
         'enableVersioning' => true,
         'markAsCopy' => 'title',
         'sql' => [
@@ -31,13 +36,39 @@ $GLOBALS['TL_DCA']['tl_h4a_teams_archive'] = [
     'list' => [
         'sorting' => [
             'mode' => DataContainer::MODE_SORTED,
-            'fields' => ['title DESC'],
-            'flag' => DataContainer::SORT_INITIAL_LETTER_ASC,
+            'fields' => ['title'],
+            'flag' => DataContainer::SORT_ASC,
             'panelLayout' => 'filter;sort,search,limit',
         ],
         'label' => [
-            'fields' => ['title'],
-            'format' => '%s',
+            'fields' => ['title', 'group'],
+            'format' => '%s - [%s]',
+        ],
+        'global_operations' => [
+            'all' => [
+                'href' => 'act=select',
+                'class' => 'header_edit_all',
+                'attributes' => 'onclick="Backend.getScrollOffset()" accesskey="e"',
+            ],
+        ],
+        'operations' => [
+            'edit' => [
+                'href' => 'table=tl_h4a_teams',
+                'icon' => 'edit.svg',
+            ],
+            'editheader' => [
+                'href' => 'act=edit',
+                'icon' => 'header.svg',
+            ],
+            'delete' => [
+                'href' => 'act=delete',
+                'icon' => 'delete.svg',
+                'attributes' => 'onclick="if(!confirm(\''.($GLOBALS['TL_LANG']['MSC']['deleteConfirm'] ?? null).'\'))return false;Backend.getScrollOffset()"',
+            ],
+            'show' => [
+                'href' => 'act=show',
+                'icon' => 'show.svg',
+            ],
         ],
     ],
 
@@ -53,11 +84,6 @@ $GLOBALS['TL_DCA']['tl_h4a_teams_archive'] = [
     'fields' => [
         'id' => [
             'sql' => 'int(10) unsigned NOT NULL auto_increment',
-        ],
-        'pid' => [
-            'foreignKey' => 'tl_h4aseason.title',
-            'sql' => "int(10) unsigned NOT NULL default '0'",
-            'relation' => ['type' => 'belongsTo', 'load' => 'lazy'],
         ],
         'tstamp' => [
             'sql' => "int(10) unsigned NOT NULL default '0'",
@@ -77,9 +103,9 @@ $GLOBALS['TL_DCA']['tl_h4a_teams_archive'] = [
             'exclude' => true,
             'search' => true,
             'inputType' => 'select',
-            'eval' => ['rgxp' => 'alias', 'doNotCopy' => true, 'unique' => true, 'maxlength' => 128, 'tl_class' => 'w50 clr'],
+            'eval' => ['doNotCopy' => true, 'maxlength' => 255, 'tl_class' => 'w50 clr'],
             'options' => [
-                'Männer', 'Frauen', 'Jugend'
+                'Männer', 'Frauen', 'Jugend',
             ],
             'sql' => "varchar(255) NOT NULL default ''",
         ],

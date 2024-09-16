@@ -2,10 +2,16 @@
 
 declare(strict_types=1);
 
+/*
+ * This file is part of contao-h4a_teams.
+ *
+ * (c) Jan Lünborg
+ *
+ * @license MIT
+ */
 
-use Janborg\H4aTeams\Model\H4aTeamsModel;
 use Janborg\H4aTeams\Model\H4aTeamsArchiveModel;
-
+use Janborg\H4aTeams\Model\H4aTeamsModel;
 
 /*
  * This file is part of contao-h4a_teams.
